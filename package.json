@@ -11,6 +11,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^3.0.21",
     "@ai-sdk/react": "^3.0.59",
+    "@github/models": "^0.0.1-beta.2",
     "ai": "^6.0.57",
     "dexie": "^4.2.1",
     "dexie-react-hooks": "^4.2.0",
