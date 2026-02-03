@@ -2,7 +2,6 @@ import { User } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 const Message = ({ role, parts }) => {
-  // ✅ Extract text from AI SDK 5.0 parts array
   const textContent =
     parts
       ?.filter((part) => part.type === "text")
@@ -55,7 +54,7 @@ const ChatThread = ({ messages, status, chatThreadRef }) => {
         messages.map((message) => <Message key={message.id} {...message} />)
       )}
 
-      {status === "streaming" && ( // ✅ FIXED: "submitted" → "streaming"
+      {status === "streaming" && (
         <div className="thinking-row">
           <div className="ai-avatar">AI</div>
           <div className="typing-indicator">

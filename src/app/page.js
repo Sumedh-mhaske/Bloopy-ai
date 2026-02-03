@@ -23,7 +23,7 @@ export default function Chat() {
   const chatThreadRef = useRef(null);
 
   const [currentChatId, setCurrentChatId] = useState(null);
-  const [input, setInput] = useState(""); // ✅ Manual input state management
+  const [input, setInput] = useState("");
 
   const fetchedChats = useLiveQuery(() =>
     db.chats.orderBy("createdAt").reverse().toArray(),
@@ -34,19 +34,12 @@ export default function Chat() {
     [currentChatId],
   );
 
-  const {
-    messages,
-    sendMessage, // ✅ Changed from handleSubmit
-    setMessages,
-    status,
-  } = useChat({
+  const { messages, sendMessage, setMessages, status } = useChat({
     transport: new DefaultChatTransport({
-      api: "/api/chat", // Make sure you have this API route
+      api: "/api/chat",
     }),
     onFinish: async ({ message }) => {
-      // ✅ Changed from onFinish(message) to onFinish({ message })
       if (currentChatId && message.role === "assistant") {
-        // Save assistant message - need to extract text from parts
         const textContent = message.parts
           .filter((part) => part.type === "text")
           .map((part) => part.text)
@@ -93,7 +86,6 @@ export default function Chat() {
       try {
         const loadedMessages = await getChatMessages(currentChatId);
 
-        // ✅ Convert database format to AI SDK UIMessage format
         const uiMessages = loadedMessages.map((msg) => ({
           id: msg.id,
           role: msg.role,
@@ -120,13 +112,10 @@ export default function Chat() {
 
     if (!input.trim()) return;
 
-    // Save user message to database
     await saveMessage(currentChatId, "user", input);
 
-    // Send message using AI SDK 5.0 pattern
     sendMessage({ text: input });
 
-    // Clear input manually
     setInput("");
   };
 
@@ -171,7 +160,7 @@ export default function Chat() {
             <input
               value={input}
               placeholder="Message AI Assistant..."
-              onChange={(e) => setInput(e.target.value)} // ✅ Manual onChange handler
+              onChange={(e) => setInput(e.target.value)}
               disabled={status !== "ready" && status !== undefined}
               className="input-field"
               aria-label="Chat input"

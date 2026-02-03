@@ -1,4 +1,3 @@
-// src/app/api/chat/route.js
 import { githubModels } from "@github/models";
 import { streamText } from "ai";
 
@@ -9,14 +8,13 @@ export async function POST(req) {
     const body = await req.json();
     let messages = body?.messages || [];
 
-    // ✅ Convert database format to AI SDK ModelMessage format
     const cleanMessages = messages
       .map((msg) => ({
         id: msg.id,
         role: msg.role,
-        content: msg.parts?.[0]?.text || msg.content || "", // Handle both formats
+        content: msg.parts?.[0]?.text || msg.content || "",
       }))
-      .filter((msg) => msg.content.trim()); // Remove empty messages
+      .filter((msg) => msg.content.trim());
 
     const result = streamText({
       model: githubModels("openai/gpt-4o"),
