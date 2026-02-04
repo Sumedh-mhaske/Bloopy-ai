@@ -17,6 +17,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { SendHorizontal, MinusCircle } from "lucide-react";
 import ChatThread from "@/components/chatThread";
 import "../styles/page.css";
+import Sidebar from "@/components/Sidebar";
 
 export default function Chat() {
   const router = useRouter();
@@ -135,6 +136,12 @@ export default function Chat() {
 
   return (
     <div className="chat-container">
+      <Sidebar
+        fetchedChats={fetchedChats}
+        currentChatId={currentChatId}
+        setCurrentChatId={setCurrentChatId}
+        initializeNewChat={initializeNewChat}
+      />
       <div className="chat-main">
         <div className="chat-header">
           <div className="title-group">
