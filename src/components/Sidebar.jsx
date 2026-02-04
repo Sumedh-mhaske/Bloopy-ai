@@ -48,7 +48,7 @@ export default function Sidebar({
         </div>
 
         <div className="chat-list">
-          {fetchedChats?.map((chat) => {
+          {fetchedChats?.map((chat) => (
             <Link
               key={chat.id}
               href={`/?chatId=${chat.id}`}
@@ -63,8 +63,8 @@ export default function Sidebar({
               >
                 {chat.title || "New chat"}
               </span>
-            </Link>;
-          })}
+            </Link>
+          ))}
 
           {fetchedChats?.length === 0 && (
             <p className="empty-chats">No chats yet</p>
